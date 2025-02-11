@@ -33,7 +33,7 @@ function is_pid($value)
  */
 function get_id($string)
 {
-  preg_match('/(Q|P)\d+/i', $string, $matches);
+    preg_match('/(Q|P)\d+/i', $string, $matches);
 
-  return !empty($matches) ? $matches[0] : $string;
+    return !empty($matches) ? $matches[0] : $string;
 }

@@ -6,53 +6,54 @@ use GuzzleHttp\Client;
 
 class ApiClient
 {
-  const API_ENDPOINT = 'https://www.wikidata.org/w/api.php';
+    public const API_ENDPOINT = 'https://www.wikidata.org/w/api.php';
 
   /**
    * @var string Value Id
    */
-  private $client;
+    private $client;
 
   /**
    * @param array $data
    */
-  public function __construct()
-  {
-    $this->client = new Client();
-  }
+    public function __construct()
+    {
+        $this->client = new Client();
+    }
 
   /**
    * Get all entities by their ids from wikidata api
    *
    * @param string $ids The IDs of the entities to get the data from (eg.: Q2)
    * @param string $lang Language (default: en)
-   * @param string $props Array of the properties to get back from each entity (supported: aliases, claims, datatype, descriptions, info, labels, sitelinks, sitelinks/urls)
+   * @param string $props Array of the properties to get back from each entity
+   * (supported: aliases, claims, datatype, descriptions, info, labels, sitelinks, sitelinks/urls)
    *
    * @return \Illuminate\Support\Collection
    */
-  public function getEntities($ids, $lang = 'en', $props = [])
-  {
-    $ids = is_array($ids) ? implode('|', $ids) : $ids;
+    public function getEntities($ids, $lang = 'en', $props = [])
+    {
+        $ids = is_array($ids) ? implode('|', $ids) : $ids;
 
-    $props = $props ? implode('|', $props) : null;
+        $props = $props ? implode('|', $props) : null;
 
-    $response = $this->client->get(self::API_ENDPOINT, [
-      'query' => [
+        $response = $this->client->get(self::API_ENDPOINT, [
+        'query' => [
         'action' => 'wbgetentities',
         'format' => 'json',
         'languages' => $lang,
         'ids' => $ids,
         'sitefilter' => $lang . 'wiki',
         'props' => $props,
-      ],
-    ]);
+        ],
+        ]);
 
-    $results = json_decode($response->getBody(), true);
+        $results = json_decode($response->getBody(), true);
 
-    $data = isset($results['entities']) ? $results['entities'] : [];
+        $data = isset($results['entities']) ? $results['entities'] : [];
 
-    return collect($data);
-  }
+        return collect($data);
+    }
 
   /**
    * Searches for entities using labels and aliases
@@ -63,10 +64,10 @@ class ApiClient
    *
    * @return \Illuminate\Support\Collection
    */
-  public function searchEntities($query, $lang = 'en', $limit = 10)
-  {
-    $response = $this->client->get(self::API_ENDPOINT, [
-      'query' => [
+    public function searchEntities($query, $lang = 'en', $limit = 10)
+    {
+        $response = $this->client->get(self::API_ENDPOINT, [
+        'query' => [
         'action' => 'wbsearchentities',
         'format' => 'json',
         'strictlanguage' => true,
@@ -75,13 +76,13 @@ class ApiClient
         'search' => $query,
         'limit' => $limit,
         'props' => '',
-      ],
-    ]);
+        ],
+        ]);
 
-    $results = json_decode($response->getBody(), true);
+        $results = json_decode($response->getBody(), true);
 
-    $data = isset($results['search']) ? $results['search'] : [];
+        $data = isset($results['search']) ? $results['search'] : [];
 
-    return collect($data);
-  }
+        return collect($data);
+    }
 }

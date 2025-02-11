@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
-  protected $dummy = [
+    protected $dummy = [
     [
       "type" => "item",
       "id" => "Q197",
@@ -19,7 +19,9 @@ abstract class TestCase extends BaseTestCase
       "descriptions" => [
         "es" => [
           "language" => "es",
-          "value" => "estructura, máquina o vehículo designado para ser soportado por el aire, sea por la acción dinámica del aire sobre las superficies de la estructura u objeto o por su propia flotabilidad",
+          "value" => "estructura, máquina o vehículo designado para ser soportado " .
+            "por el aire, sea por la acción dinámica del aire sobre las superficies " .
+            "de la estructura u objeto o por su propia flotabilidad",
         ],
       ],
       "aliases" => [
@@ -68,9 +70,9 @@ abstract class TestCase extends BaseTestCase
         ],
       ],
     ],
-  ];
+    ];
 
-  protected $dummyProperties = [
+    protected $dummyProperties = [
     [
       "item" => "http://www.wikidata.org/entity/Q49546",
       "prop" => "http://www.wikidata.org/prop/P4952",
@@ -95,5 +97,5 @@ abstract class TestCase extends BaseTestCase
       "qualifierValue" => "http://www.wikidata.org/entity/Q54876503",
       "qualifierValueLabel" => "EUH066",
     ],
-  ];
+    ];
 }
